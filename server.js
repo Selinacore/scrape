@@ -1,7 +1,8 @@
 var express = require("express");
 var mongoose = require("mongoose");
-
+var exphbs = require("express-handlebars");
 var PORT = 3000;
+var methodOverride = require("method-override");
 
 // Require all models
 // var db = require("./models");
@@ -24,7 +25,9 @@ app.use(routes);
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrape";
 
 mongoose.connect(MONGODB_URI);
-
+// Connect Handlebars to our Express app
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 // Start the server
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");

@@ -3,10 +3,14 @@ var router = express.Router();
 var cheerio = require("cheerio");
 var axios = require("axios");
 
+var db = require("../models");
 // require our db modals 
 
 router.get("/", function(req,res) {
-    res.render("index");
+  db.Trail.find().then(function(data){
+    // res.json(data); 
+    res.render("index",{ trails:data });
+  })
 });
 
 router.get("/scrape", function(req,res) {
@@ -36,11 +40,26 @@ router.get("/scrape", function(req,res) {
             difficulty: difficulty,
             location: location
           });
+
         });
+
       
         // Log the results once you've looped through each of the elements found with cheerio
         console.log(results);
+        db.Trail.create(results);
+
       });
-        
+    res.json("scrape complete");    
+})
+router.get("/comments/:id", function(req,res) {
+  db.Trail.findById(req.params.id).populate("Comments").then(function(data){
+    res.render("comments",{ comments: data });
+  })
+})
+router.post("/comments/:id", function(req,res) {
+  console.log("Comment")
+  db.Comment.create(req.body).then(function(data){
+    res.json(data);
+  })
 })
 module.exports = router;

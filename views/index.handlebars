@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Trail Scraper</h1>
+        </div>
+    </div>
+    <div class="row">
+        {{#each trails}}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{difficulty}}</h6>
+                <p class="card-text">{{location}}</p>
+                <a href = "/comments/{{this.id}}">
+                <button type="button" class="btn btn-success" data-id = "{{this.id}}">Add Comment</button>
+</a>
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+</div>
