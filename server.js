@@ -1,7 +1,7 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
-var PORT = 3000;
+var PORT = process.env.PORT ||3000;
 var methodOverride = require("method-override");
 
 // Require all models
